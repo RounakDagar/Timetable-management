@@ -1,0 +1,116 @@
+/* General body styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f0f4f8, #f9fbfc);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center the signup form */
+.signup-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Title styling */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form box container */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input styling */
+input, select {
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Focus effect */
+input:focus, select:focus {
+  border-color: #007bff;
+}
+
+/* Button styling */
+button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* OTP input styling */
+input[name="otp"] {
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Message display */
+p {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Success message */
+p.success {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Error message */
+p.error {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 30px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  input, button {
+    font-size: 14px;
+  }
+}

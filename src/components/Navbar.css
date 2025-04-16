@@ -1,0 +1,72 @@
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.navbar .logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar .nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+  color: #ffcc00;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-btn {
+  background-color: #333;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dark-mode-btn:hover {
+  background-color: #444;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #2e2e2e;
+  color: white;
+}
+
+body.dark-mode .form-container {
+  background-color: #333;
+  color: white;
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-btn,
+body.dark-mode .otp-btn {
+  border: 2px solid #555;
+}
+
+body.dark-mode .navbar {
+  background-color: #222;
+}
+
+body.dark-mode .navbar .nav-links a {
+  color: white;
+}
