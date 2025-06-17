@@ -1,0 +1,21 @@
+# Use Java image
+FROM openjdk:17
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy pom.xml and install dependencies
+COPY pom.xml ./
+COPY mvnw ./
+COPY .mvn .mvn
+
+RUN ./mvnw dependency:go-offline
+
+# Copy the rest of the backend code
+COPY . .
+
+# Package the Spring Boot app
+RUN ./mvnw clean package -DskipTests
+
+# Run the JAR
+CMD ["java", "-jar", "target/Time-Table-Management-0.0.1-SNAPSHOT.jar"]
