@@ -9,7 +9,6 @@ import {
   FormLabel,
   Input,
   Heading,
-  Text,
   VStack,
   Flex,
   Link,
