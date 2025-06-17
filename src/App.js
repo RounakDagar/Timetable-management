@@ -10,6 +10,7 @@ import AttendanceSummary from "./components/Attendance/AttendanceSummary";
 import TimetableDetails from "./components/Dashboard/FacultyDashboard/TimetableDetails";
 import CourseDetails from "./components/Dashboard/FacultyDashboard/CourseDetails";
 import ForgotPassword from "./components/Auth/ForgotPassword";
+import { Spinner, Box } from "@chakra-ui/react";
 import "./App.css";
 
 // Route Wrappers
@@ -20,7 +21,12 @@ const LoginRedirect = () => {
   console.log("LoginRedirect:", { isAuthenticated, userRole, loading });
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator while restoring auth state
+    return (
+      <Box textAlign="center" mt="20">
+        <Spinner size="xl" color="teal.500" />
+        <p>Loading...</p>
+      </Box>
+    );
   }
 
   if (isAuthenticated) {
@@ -37,9 +43,18 @@ const LoginRedirect = () => {
 };
 
 const ProtectedRoute = ({ children, role }) => {
-  const { isAuthenticated, userRole } = React.useContext(AuthContext);
+  const { isAuthenticated, userRole, loading } = React.useContext(AuthContext);
 
   console.log("ProtectedRoute:", { isAuthenticated, userRole, role });
+
+  if (loading) {
+    return (
+      <Box textAlign="center" mt="20">
+        <Spinner size="xl" color="teal.500" />
+        <p>Loading...</p>
+      </Box>
+    );
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

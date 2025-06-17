@@ -7,7 +7,6 @@ import {
   FormLabel,
   Input,
   Heading,
-  Text,
   VStack,
   Flex,
   useToast,
@@ -16,6 +15,7 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [step, setStep] = useState(1); // Step 1: Registration, Step 2: OTP Verification
@@ -27,7 +27,9 @@ const SignUp = () => {
   });
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false); // State for resend OTP button
   const toast = useToast();
+  const navigate = useNavigate();
 
   // Dynamic colors for dark mode
   const bg = useColorModeValue("white", "gray.800");
@@ -41,6 +43,19 @@ const SignUp = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    
+    // Validate password length
+    if (credentials.password.length < 8) {
+      toast({
+        title: "Validation Error",
+        description: "Password must be greater than or equal to 8 characters.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return; // Stop form submission
+    }
+
     setIsLoading(true);
 
     try {
@@ -53,6 +68,7 @@ const SignUp = () => {
         isClosable: true,
       });
       setStep(2); // Move to OTP verification step
+      
     } catch (error) {
       toast({
         title: "Registration failed",
@@ -71,27 +87,82 @@ const SignUp = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/verify-otp", {
+      const response = await axios.post("http://localhost:8080/auth/verify-signup", {
         email: credentials.email,
         otp,
       });
-      toast({
-        title: "Verification successful!",
-        description: response.data || "You can now log in.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+
+      const { role, name, message, token } = response.data; // Destructure backend response
+
+      if (message.includes("OTP verified")) {
+        toast({
+          title: "Verification successful!",
+          description: message, // Display the backend message
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        // Save token, role, and name in localStorage or context
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+        localStorage.setItem("name", name);
+
+        // Redirect to the appropriate dashboard based on role
+        setTimeout(() => {
+          navigate(role === "STUDENT" ? "/student-dashboard" : "/faculty-dashboard");
+        }, 1000); // Wait for the toast to finish before redirecting
+      } else {
+        toast({
+          title: "Verification failed",
+          description: message, // Display the backend message
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       toast({
         title: "Verification failed",
-        description: error.response?.data || "Invalid OTP. Please try again.",
+        description: typeof error.response?.data === "string" 
+          ? error.response.data 
+          : "Invalid OTP. Please try again.",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setIsResending(true);
+
+    try {
+      const response = await axios.get("http://localhost:8080/auth/getOtp", {
+        params: { email: credentials.email }, // Send email as a query parameter
+      });
+
+      toast({
+        title: "OTP Resent",
+        description: response.data || "A new OTP has been sent to your email.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to Resend OTP",
+        description: typeof error.response?.data === "string" 
+          ? error.response.data 
+          : "Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -210,6 +281,14 @@ const SignUp = () => {
                   isLoading={isLoading}
                 >
                   Verify OTP
+                </Button>
+                <Button
+                  variant="link"
+                  colorScheme="teal"
+                  isLoading={isResending}
+                  onClick={handleResendOtp}
+                >
+                  Resend OTP
                 </Button>
               </VStack>
             </form>

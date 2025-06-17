@@ -105,7 +105,7 @@ const StudentDashboard = () => {
   };
 
   const handleTimetableClick = (entry) => {
-    navigate(`/attendance-summary/${userId}/${entry.course.courseCode}`);
+    
   };
 
   if (loading) {
@@ -202,6 +202,7 @@ const StudentDashboard = () => {
                           <Th>Venue</Th>
                           <Th>Course</Th>
                           <Th>Faculty</Th>
+                          <Th>Attended</Th> {/* New column for attendance */}
                         </Tr>
                       </Thead>
                       <Tbody>
@@ -217,6 +218,17 @@ const StudentDashboard = () => {
                               {entry.course.courseName} ({entry.course.courseCode})
                             </Td>
                             <Td>{entry.faculty.name}</Td>
+                            <Td>
+                              {entry.attended ? (
+                                <Text color="green.500" fontWeight="bold">
+                                  Yes
+                                </Text>
+                              ) : (
+                                <Text color="red.500" fontWeight="bold">
+                                  No
+                                </Text>
+                              )}
+                            </Td>
                           </Tr>
                         ))}
                       </Tbody>

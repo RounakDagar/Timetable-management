@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -39,12 +41,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.clear();
-    setToken(null);
+    console.log("Logging out...");
+    localStorage.clear(); // Clear all authentication-related data
+    setIsAuthenticated(false);
     setUserRole(null);
     setUserName(null);
     setUserId(null);
-    setIsAuthenticated(false);
+    setToken(null);
+
+    // Redirect to the login page
+    navigate("/login", { replace: true });
   };
 
   return (

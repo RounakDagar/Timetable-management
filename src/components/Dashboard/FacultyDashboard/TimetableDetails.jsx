@@ -194,6 +194,33 @@ const TimetableDetails = () => {
     }
   };
 
+  const handleDeleteTimetable = async () => {
+    try {
+      await axios.delete(`http://localhost:8080/timetables/${timetable.id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      toast({
+        title: "Timetable Deleted",
+        description: "The timetable has been successfully removed.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      navigate(-1); // Navigate back after deletion
+    } catch (error) {
+      console.error("Error deleting timetable:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete the timetable. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   const calculateAttendancePercentage = (totalClasses, attendedClasses) => {
     return totalClasses > 0 ? Math.round((attendedClasses / totalClasses) * 100) : 0;
   };
@@ -384,6 +411,14 @@ const TimetableDetails = () => {
           )}
         </CardBody>
       </Card>
+
+      <Button
+        colorScheme="red"
+        onClick={handleDeleteTimetable}
+        mb="6"
+      >
+        Delete Timetable
+      </Button>
     </Box>
   );
 };

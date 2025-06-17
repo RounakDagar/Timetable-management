@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 import {
   Box,
   Button,
@@ -8,12 +10,12 @@ import {
   Input,
   Heading,
   VStack,
-  Text,
   useToast,
   useColorModeValue,
 } from "@chakra-ui/react";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate(); // Initialize navigate
   const [step, setStep] = useState(1); // Step 1: Send OTP, Step 2: Verify OTP and Reset Password
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -64,13 +66,33 @@ const ForgotPassword = () => {
         otp,
         password: newPassword,
       });
-      toast({
-        title: "Password Reset Successful",
-        description: response.data || "Your password has been updated.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+
+      const message = response.data; // Backend response message
+      console.log("Backend Response:", message); // Log the response to verify its content
+
+      // Check if the message contains the success text
+      if (message.toLowerCase().includes("password changed")) {
+        toast({
+          title: "Success",
+          description: message, // Display the backend message
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        // Redirect to login page after showing the toast
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000); // Wait for the toast to finish before redirecting
+      } else {
+        toast({
+          title: "Error",
+          description: "Unexpected response from the server.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",

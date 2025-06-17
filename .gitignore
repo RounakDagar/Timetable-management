@@ -21,3 +21,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore compiled backend files
+backend/target/
+
+# Ignore sensitive config files
+backend/src/main/resources/application.properties
+backend/src/main/resources/application.yml
+
+
+# Ignore system + IDE stuff
+*.log
+.DS_Store
+.env
+
