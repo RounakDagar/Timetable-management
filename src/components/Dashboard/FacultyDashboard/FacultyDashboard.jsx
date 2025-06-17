@@ -14,9 +14,7 @@ import {
   TabPanel,
   Spinner,
   Text,
-  IconButton,
 } from "@chakra-ui/react";
-import { AddIcon, CalendarIcon } from "@chakra-ui/icons";
 import TimetableView from "./TimetableView";
 import CourseView from "./CourseView";
 import { useNavigate } from "react-router-dom";
