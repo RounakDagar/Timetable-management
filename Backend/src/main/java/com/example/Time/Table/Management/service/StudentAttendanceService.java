@@ -1,4 +1,4 @@
-package com.example.Time.Table.Management.Service;
+package com.example.Time.Table.Management.service;
 
 import com.example.Time.Table.Management.Model.Student;
 import com.example.Time.Table.Management.Model.StudentAttendance;

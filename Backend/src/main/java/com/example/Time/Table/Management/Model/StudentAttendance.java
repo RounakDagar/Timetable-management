@@ -35,4 +35,7 @@ public class StudentAttendance {
         this.attended = attended;
     }
 
+    public boolean isAttended() {
+        return attended;
+    }
 }

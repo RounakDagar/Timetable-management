@@ -2,7 +2,7 @@ package com.example.Time.Table.Management.controller;
 
 import com.example.Time.Table.Management.Model.*;
 import com.example.Time.Table.Management.Repo.*;
-import com.example.Time.Table.Management.Service.StudentAttendanceService;
+import com.example.Time.Table.Management.service.StudentAttendanceService;
 import com.example.Time.Table.Management.dto.AttendanceSummaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

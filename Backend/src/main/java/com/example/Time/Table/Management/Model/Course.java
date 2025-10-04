@@ -46,7 +46,9 @@ public class Course {
         this.courseName=courseName;
         this.semester=semester;
     }
+    
 
-    public Course(Course course) {
-    }
+//    public Course() {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
 }
